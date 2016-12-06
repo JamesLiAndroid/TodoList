@@ -2,13 +2,19 @@
   "name": "todo-list",
   "version": "0.0.1",
   "description": "TodoList后端服务",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "mongodb": "^2.2.11",
+    "mongoose": "^4.7.1",
+    "multer": "^0.1.8"
   }
 }
