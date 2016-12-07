@@ -75,4 +75,109 @@ module.exports = function(app) {
 
     })
   })
+
+  app.post('/changeStatus', function(req,res){
+    var dbItems = global.dbHelper.getModel('todoItems')
+    var dbUser = global.dbHelper.getModel('user')
+
+    var userId = req.body.userId
+    var isCompleted = req.body.isCompleted
+    var itemId = req.body.itemId
+
+    dbUser.findOne({
+      _id: userId
+    }, function(error, doc) {
+      if(error) {
+        res.json({'status': 404, 'reason': '未获取用户信息'})
+      } else {
+        if(!doc) {
+          res.json({'status': 404, 'reason': '未获取用户信息'})
+        } else {
+          dbItems.update({
+            _id: itemId
+          }, {
+            $set: {
+              isComplete: isCompleted
+            }
+          }, function(error) {
+            if(error) {
+              res.json({ 'status': 404, 'reason': '状态更新不成功' })
+            } else {
+              res.json({ 'status': 200, 'result': '状态更新完毕！'})
+            }
+          })
+        }
+      }
+
+    })
+  })
+
+  app.post('/delItem', function(req,res) {
+    var dbItems = global.dbHelper.getModel('todoItems')
+    var dbUser = global.dbHelper.getModel('user')
+
+    var userId = req.body.userId
+    var itemId = req.body.itemId
+
+     dbUser.findOne({
+      _id: userId
+    }, function(error, doc) {
+      if(error) {
+        res.json({'status': 404, 'reason': '未获取用户信息'})
+      } else {
+        if(!doc) {
+          res.json({'status': 404, 'reason': '未获取用户信息'})
+        } else {
+          dbItems.remove({
+            _id: itemId
+          }, function(error) {
+            if(error) {
+              res.json({ 'status': 404, 'reason': '删除条目信息失败！' })
+            } else {
+              res.json({ 'status': 200, 'result': '删除数据成功！' })
+            }
+          })
+        }
+      }
+    })
+
+  })
+
+  app.post('/delItemFalse', function(req,res){
+    var dbItems = global.dbHelper.getModel('todoItems')
+    var dbUser = global.dbHelper.getModel('user')
+
+    var userId = req.body.userId
+    var isDeled = req.body.isDel
+    var itemId = req.body.itemId
+
+    dbUser.findOne({
+      _id: userId
+    }, function(error, doc) {
+      if(error) {
+        res.json({'status': 404, 'reason': '未获取用户信息'})
+      } else {
+        if(!doc) {
+          res.json({'status': 404, 'reason': '未获取用户信息'})
+        } else {
+          dbItems.update({
+            _id: itemId
+          }, {
+            $set: {
+              isDel: isDeled
+            }
+          }, function(error) {
+            if(error) {
+              res.json({ 'status': 404, 'reason': '数据删除不成功' })
+            } else {
+              res.json({ 'status': 200, 'result': '数据删除成功！'})
+            }
+          })
+        }
+      }
+
+    })
+  })
+
+
 }
