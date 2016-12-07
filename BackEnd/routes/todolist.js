@@ -1,3 +1,4 @@
+
 module.exports = function(app) {
   app.post('/addItem', function(req,res) {
     var dbItems = global.dbHelper.getModel('todoItems')
@@ -5,7 +6,10 @@ module.exports = function(app) {
 
     var userId = req.body.userId
     var content = req.body.content
-    var time = req.body.time
+    var moment = require('moment')
+    var time = moment().format('MMMM Do YYYY,h:mm')
+
+    console.log('当前时间：' + time)
 
     dbUser.findOne({
       _id: userId
