@@ -13,6 +13,7 @@ module.exports = function(app) {
       if(error) {
         res.json({ 'status': 404, 'reason': '用户未找到！'})
       } else {
+        console.log('查询的用户信息为：'+doc)
         if(doc) {
 
       dbItems.create({
@@ -38,7 +39,40 @@ module.exports = function(app) {
       }
     })
   })
-  app.post('/changeContent', function(req,res){
 
+  app.post('/changeContent', function(req,res){
+    var dbItems = global.dbHelper.getModel('todoItems')
+    var dbUser = global.dbHelper.getModel('user')
+
+    var userId = req.body.userId
+    var newContent = req.body.newContent
+    var itemId = req.body.itemId
+
+    dbUser.findOne({
+      _id: userId
+    }, function(error, doc) {
+      if(error) {
+        res.json({'status': 404, 'reason': '未获取用户信息'})
+      } else {
+        if(!doc) {
+          res.json({'status': 404, 'reason': '未获取用户信息'})
+        } else {
+          dbItems.update({
+            _id: itemId
+          }, {
+            $set: {
+              content: newContent
+            }
+          }, function(error) {
+            if(error) {
+              res.json({ 'status': 404, 'reason': '数据更新不成功' })
+            } else {
+              res.json({ 'status': 200, 'result': '数据更新完毕！'})
+            }
+          })
+        }
+      }
+
+    })
   })
 }
