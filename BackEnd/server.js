@@ -22,8 +22,10 @@ app.use(session({
 }))*/
 
 // 定义数据库操作的全局变量
-global.dbHelper = require('./common/dbHelper.js')
+global.dbHelper = require('./common/dbHelper')
+//global.dbHelper.init()
 
+console.log('数据库初始化')
 // 定义中间件
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

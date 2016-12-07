@@ -3,6 +3,8 @@ module.exports = function(app) {
     var User = global.dbHelper.getModel('user')
     var username = req.body.username
 
+    console.log(req.body.username+'...'+req.body.password)
+
     User.findOne({
       name: username
     }, function(error, doc) {

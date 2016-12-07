@@ -28,6 +28,11 @@ module.exports = {
     isDel: {
       type: Boolean,
       default: false
+    },
+
+    isComplete: {
+      type: Boolean,
+      default: false
     }
   }
 }
