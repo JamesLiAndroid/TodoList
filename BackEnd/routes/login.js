@@ -13,13 +13,19 @@ module.exports = function(app) {
         console.log('未获取用户信息')
         res.json({ 'status': 404, 'reason': '用户不存在'})
       } else {
-        console.log('获取的用户密码为:'+doc.password)
-        if(doc.password !== req.body.password) {
-          console.log('密码错误!')
-          res.json({ 'status': 404, 'reason': '用户名密码不匹配!'})
+        if(!doc) {
+          console.log('未查询到用户！')
+          res.json({'status':'502', 'reason':'用户不存在，请先创建'})
         } else {
-          console.log('登陆成功')
-          res.json({'status' : 200, 'result':'用户登陆成功!', 'userId': doc._id})
+          console.log('获取的用户密码为:'+doc.password)
+
+          if(doc.password !== req.body.password) {
+            console.log('密码错误!')
+            res.json({ 'status': 404, 'reason': '用户名密码不匹配!'})
+          } else {
+            console.log('登陆成功')
+            res.json({'status' : 200, 'result':'用户登陆成功!', 'userId': doc._id})
+          }
         }
       }
     })
