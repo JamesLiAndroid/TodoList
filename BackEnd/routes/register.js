@@ -3,8 +3,10 @@ module.exports = function (app) {
     var User = global.dbHelper.getModel('user')
     console.log('body==='+req.body)
     var uname = req.body.username
-    var password = req.body.password
+    var rpassword = req.body.password
     var repassword = req.body.repassword
+
+    console.log('用户注册信息为:'+uname+'...'+rpassword+'...'+repassword)
 
     User.findOne({
       name: uname
@@ -13,13 +15,13 @@ module.exports = function (app) {
         console.log('用户名已经存在')
         res.json({ 'status': 404, 'reason': '用户名已经存在'})
       } else {
-        if(repassword !== password) {
+        if(repassword !== rpassword) {
           res.json({'status': 500, 'reason': '密码不匹配，用户创建不成功！'})
         } else {
           console.log('创建新用户')
           User.create({
             name: uname,
-            password: password
+            password: rpassword
           }, function(error, doc) {
             if(error) {
               console.log('创建不成功'+error)

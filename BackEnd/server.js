@@ -9,7 +9,7 @@ var bodyParser = require('body-parser')
 var app = express()
 
 // 连接数据库
-mongoose.connect('mongodb://127.0.0.1:27017/todolist')
+mongoose.connect('mongodb://127.0.0.1:27017/ToDoList')
 
 /*
 app.use(session({
@@ -23,7 +23,7 @@ app.use(session({
 
 // 定义数据库操作的全局变量
 global.dbHelper = require('./common/dbHelper')
-//global.dbHelper.init()
+global.dbHelper.init()
 
 console.log('数据库初始化')
 // 定义中间件
