@@ -1,4 +1,5 @@
 import Reactotron from 'reactotron-react-native'
 
-// App监控组件
-Reactotron.configure().connect()
+Reactotron
+  .configure() // we can use plugins here -- more on this later
+  .connect() // let's connect!

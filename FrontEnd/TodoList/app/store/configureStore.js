@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, autoRehydrate } from 'redux-persist'
-
 // Thunk middleware allows actions to be chained and waited on by returning
 // a function from that action
 // https://github.com/gaearon/redux-thunk
@@ -27,9 +26,9 @@ if (process.env.NODE_ENV === 'development') {
 export default (initialState) => {
   // http://redux.js.org/docs/api/createStore.html
   const store = createStore(
-      reducer,
-      initialState,
-      applyMiddleware(...middleware),
+    reducer,
+    initialState,
+    applyMiddleware(...middleware),
   )
   return store
 }

@@ -7,8 +7,8 @@ import { actionCreators } from '../redux/todoRedux'
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-    },
+    flex: 1,
+  },
 })
 
 const mapStateToProps = (state) => ({
@@ -18,17 +18,17 @@ const mapStateToProps = (state) => ({
 class App extends Component {
 
   static propTypes = {
-      items: PropTypes.array.isRequired,
-      dispatch: PropTypes.func.isRequired,
-    }
+    items: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  }
 
   render() {
-      return (
-            <View style={styles.container}>
+    return (
+      <View style={styles.container}>
 
-            </View>View>
-          )
-    }
+      </View>
+    )
+  }
 }
 
 export default connect(mapStateToProps)(App)
