@@ -5,6 +5,10 @@ import { Actions } from 'react-native-router-flux'
 
 import { actionCreators } from '../redux/todoRedux'
 
+import Title from '../components/Title'
+import Footer from '../components/Footer'
+import List from '../components/List'
+import Input from '../components/Input'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,10 +26,23 @@ class App extends Component {
     dispatch: PropTypes.func.isRequired,
   }
 
+  addItem() {
+
+  }
+
+  removeCompleted() {
+
+  }
+
   render() {
     return (
       <View style={styles.container}>
-
+        <Title>TodoList</Title>
+        <Input placeholder={'Enter an item'} onSubmit={this.addItem} />
+        <View style={styles.divider} />
+        <List />
+        <View style={styles.divider} />
+        <Footer onRemoveCompleted={this.removeCompleted}/>
       </View>
     )
   }

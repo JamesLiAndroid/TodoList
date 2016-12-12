@@ -4,11 +4,16 @@ import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-nati
 import Checkbox from './Checkbox'
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
 })
 
 export default class List extends Component {
 
   render() {
-    return null
+    return (
+      <ScrollView style={styles.container} />
+    )
   }
 }
