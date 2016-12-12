@@ -26,21 +26,37 @@ class App extends Component {
     dispatch: PropTypes.func.isRequired,
   }
 
-  addItem() {
-
+  addItem = (item) => {
+    const {dispatch} = this.props
+    dispatch(actionCreators.addItem(item))
   }
 
-  removeCompleted() {
+  removeItem = (index) => {
+    const {dispatch} = this.props
+    dispatch(actionCreators.removeItem(index))
+  }
+  removeCompleted = () => {
+    const {dispatch} = this.props
+    dispatch(actionCreators.removeCompleted())
+  }
 
+  toggleItemCompleted = (index) => {
+    const {dispatch} = this.props
+    dispatch(actionCreators.toggleItemCompleted(index))
   }
 
   render() {
+    const {items} = this.props
     return (
       <View style={styles.container}>
         <Title>TodoList</Title>
         <Input placeholder={'Enter an item'} onSubmit={this.addItem} />
         <View style={styles.divider} />
-        <List />
+        <List
+          items={items}
+          onRemoveItem={this.removeItem}
+          onToggleItemCompleted={this.toggleItemCompleted}
+        />
         <View style={styles.divider} />
         <Footer onRemoveCompleted={this.removeCompleted}/>
       </View>
