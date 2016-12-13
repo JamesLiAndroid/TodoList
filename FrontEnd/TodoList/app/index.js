@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 
 import configureStore from './store/configureStore'
 import App from './containers/App'
+import Login from './containers/Login'
 
 const store = configureStore()
 
@@ -10,7 +11,7 @@ export default class extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <Login />
       </Provider>
     )
   }

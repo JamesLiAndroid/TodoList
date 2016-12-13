@@ -9,6 +9,7 @@ import Title from '../components/Title'
 import Footer from '../components/Footer'
 import List from '../components/List'
 import Input from '../components/Input'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
