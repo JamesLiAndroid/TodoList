@@ -108,7 +108,7 @@ class Login extends Component {
               style={styles.itemInput}
               placeholder={'请输入用户名'}
               numberOfLines={1}
-              onSubmitEditing={this.onNameChange.bind(this)}
+              onSubmitEditing={this.onNameChange}
               autoFocus={true}
             />
           </View>
@@ -119,7 +119,7 @@ class Login extends Component {
               placeholder={'请输入密码'}
               secureTextEntry={true}
               numberOfLines={1}
-              onSubmitEditing={this.onPasswordChange.bind(this)}
+              onSubmitEditing={this.onPasswordChange}
               KeyboardType={'numbers-and-punctuation'}
               password={true}
             />

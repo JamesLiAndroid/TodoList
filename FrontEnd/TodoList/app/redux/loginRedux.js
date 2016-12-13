@@ -10,6 +10,7 @@ const initialState = {
 
 export const actionCreators = {
 	addUserName: (username) => {
+		console.log('username:'+username)
 		return {type: types.ADD_USERNAME, payload: username}
 	},
 
