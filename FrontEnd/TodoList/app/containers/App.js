@@ -3,13 +3,13 @@ import { View, ScrollView, StyleSheet, TextInput, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 
-import { actionCreators } from '../redux/todoRedux'
+import { todoActionCreators } from '../redux/'
 
 import Title from '../components/Title'
 import Footer from '../components/Footer'
 import List from '../components/List'
 import Input from '../components/Input'
-
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  items: state.items,
+  items: state.todo.items,
 })
 
 class App extends Component {
@@ -29,21 +29,21 @@ class App extends Component {
 
   addItem = (item) => {
     const {dispatch} = this.props
-    dispatch(actionCreators.addItem(item))
+    dispatch(todoActionCreators.addItem(item))
   }
 
   removeItem = (index) => {
     const {dispatch} = this.props
-    dispatch(actionCreators.removeItem(index))
+    dispatch(todoActionCreators.removeItem(index))
   }
   removeCompleted = () => {
     const {dispatch} = this.props
-    dispatch(actionCreators.removeCompleted())
+    dispatch(todoActionCreators.removeCompleted())
   }
 
   toggleItemCompleted = (index) => {
     const {dispatch} = this.props
-    dispatch(actionCreators.toggleItemCompleted(index))
+    dispatch(todoActionCreators.toggleItemCompleted(index))
   }
 
   render() {

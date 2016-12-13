@@ -7,12 +7,11 @@ import {
   StyleSheet
 } from 'react-native'
 
-//import { connect } from 'react-redux'
-//import { Actions } from 'react-native-router-flux'
+import { connect } from 'react-redux'
+import { Actions } from 'react-native-router-flux'
 
-//import { actionCreators } from '../redux/todoRedux'
+import { loginActionCreators } from '../redux/'
 
-import Input from '../components/Input'
 import Title from '../components/Title'
 
 const styles = StyleSheet.create({
@@ -53,40 +52,17 @@ const styles = StyleSheet.create({
   }
 })
 
-export default class Login extends Component {
-/*
+const mapStateToProps = (state) => ({
+  username: state.login.username,
+  password: state.login.password
+})
+
+class Login extends Component {
+
   static propTypes = {
-    username: PropTypes.string,
-    password: PropTypes.string
-  }
-*/
-/*
-  state = {
-    username: '',
-    password: ''
-  }
-*/
-  constructor(props) {
-    super(props)
-    this.state = {
-      username: '',
-      password: ''
-    }
-
- //   this.onNameChange = this.onNameChange.bind(this)
- //   this.onPasswordChange = this.onPasswordChange.bind(this)
-  }
-
-  login() {
-    let username = this.state.username
-    let password = this.state.password
-
-    console.log(username+'::'+password)
-    if(username && password) {
-
-    } else {
-      console.log('用户名和密码未输入')
-    }
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired
   }
 
   toRegister() {
@@ -94,39 +70,57 @@ export default class Login extends Component {
   }
 
   onNameChange = (content) => {
-    console.log(content)
-    this.setState({username: content})
+    console.log('用户名：'+content)  
+    const {dispatch} = this.props
+    dispatch(loginActionCreators.addUserName(content))
+    console.log('写入用户名完成！')  
+    //this.setState({username: content})
   }
 
   onPasswordChange = (content) => {
-    this.setState({password: content})
+    console.log('密码：'+content)  
+    const {dispatch} = this.props
+    dispatch(loginActionCreators.addPassword(content))
+    console.log('写入密码完成！')  
+    //this.setState({password: content})
+  }
+
+  login = () => {
+    const {username, password} = this.props
+    console.log(username+'::'+password)
+
+    if(username && password) {
+      console.log(username+'::'+password) 
+    } else {
+      console.log('用户名和密码未输入')
+    }
   }
 
   render() {
+    //const {username, password} = this.props
     return (
       <View style={styles.container}>
         <Title> 登录 </Title>
         <View style={styles.loginArea}>
           <View style={styles.childContainer}>
             <Text style={styles.itemname}>用户名</Text>
-            <Input
+            <TextInput
               style={styles.itemInput}
               placeholder={'请输入用户名'}
               numberOfLines={1}
-              onChangeText={this.onNameChange.bind(this)}
+              onSubmitEditing={this.onNameChange.bind(this)}
               autoFocus={true}
             />
           </View>
           <View style={styles.childContainer}>
             <Text style={styles.itemname}>密码</Text>
-            <Input
+            <TextInput
               style={styles.itemInput}
               placeholder={'请输入密码'}
               secureTextEntry={true}
               numberOfLines={1}
-              onChangeText={this.onPasswordChange.bind(this)}
+              onSubmitEditing={this.onPasswordChange.bind(this)}
               KeyboardType={'numbers-and-punctuation'}
-              autoFocus={true}
               password={true}
             />
           </View>
@@ -142,3 +136,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps)(Login)
