@@ -7,11 +7,12 @@ import {
   StyleSheet
 } from 'react-native'
 
+import 'whatwg-fetch'
+
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 
 import { loginActionCreators } from '../redux/'
-
 import Title from '../components/Title'
 
 const styles = StyleSheet.create({
@@ -66,8 +67,8 @@ class Login extends Component {
   }
 
   state = {
-    username: '',
-    password: ''
+    currentUsername: '',
+    currentPassword: ''
   }
 
   toRegister() {
@@ -75,27 +76,30 @@ class Login extends Component {
   }
 
   changeName = (text) => {
-    this.setState({username: text})
+    console.log('写入用户名：'+text)
+    this.setState({currentUsername: text})
   }
 
   changePassword = (text) => {
-    this.setState({password: text})
+    console.log('写入密码：'+text)
+    this.setState({currentPassword: text})
   }
 
   onNameChange = () => {
     const {dispatch} = this.props
-    const {username} = this.state
-    console.log('用户名：'+ username)
-    dispatch(loginActionCreators.addUserName(username))
+    const {currentUsername} = this.state
+    console.log('用户名：'+ currentUsername)
+    if(!currentUsername) return
+    dispatch(loginActionCreators.addUserName(currentUsername))
     console.log('写入用户名完成！')
     //this.setState({username: content})
   }
 
   onPasswordChange = () => {
     const {dispatch} = this.props
-    const {password} = this.state
-    console.log('密码：'+ password)
-    dispatch(loginActionCreators.addPassword(password))
+    const {currentPassword} = this.state
+    console.log('密码：'+ currentPassword)
+    dispatch(loginActionCreators.addPassword(currentPassword))
     console.log('写入密码完成！')
     //this.setState({password: content})
   }
@@ -106,9 +110,34 @@ class Login extends Component {
 
     if(username && password) {
       console.log(username+'::'+password)
+      this.loginFunc(username, password, (responseJson) => {
+        console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
+        console.log('登陆返回的数据为：'+responseJson.userId)
+      })
     } else {
-      console.log('用户名和密码未输入')
+      console.log('用户名或密码未输入')
     }
+  }
+
+  loginFunc = (username, password, callback) => {
+      fetch('http://172.16.7.218:3000/login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'username='+username+'&password='+password
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        callback(responseJson)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
   }
 
   render() {
