@@ -65,23 +65,38 @@ class Login extends Component {
     dispatch: PropTypes.func.isRequired
   }
 
+  state = {
+    username: '',
+    password: ''
+  }
+
   toRegister() {
 
   }
 
-  onNameChange = (content) => {
-    console.log('用户名：'+content)  
+  changeName = (text) => {
+    this.setState({username: text})
+  }
+
+  changePassword = (text) => {
+    this.setState({password: text})
+  }
+
+  onNameChange = () => {
     const {dispatch} = this.props
-    dispatch(loginActionCreators.addUserName(content))
-    console.log('写入用户名完成！')  
+    const {username} = this.state
+    console.log('用户名：'+ username)
+    dispatch(loginActionCreators.addUserName(username))
+    console.log('写入用户名完成！')
     //this.setState({username: content})
   }
 
-  onPasswordChange = (content) => {
-    console.log('密码：'+content)  
+  onPasswordChange = () => {
     const {dispatch} = this.props
-    dispatch(loginActionCreators.addPassword(content))
-    console.log('写入密码完成！')  
+    const {password} = this.state
+    console.log('密码：'+ password)
+    dispatch(loginActionCreators.addPassword(password))
+    console.log('写入密码完成！')
     //this.setState({password: content})
   }
 
@@ -90,7 +105,7 @@ class Login extends Component {
     console.log(username+'::'+password)
 
     if(username && password) {
-      console.log(username+'::'+password) 
+      console.log(username+'::'+password)
     } else {
       console.log('用户名和密码未输入')
     }
@@ -108,6 +123,7 @@ class Login extends Component {
               style={styles.itemInput}
               placeholder={'请输入用户名'}
               numberOfLines={1}
+              onChangeText={this.changeName}
               onSubmitEditing={this.onNameChange}
               autoFocus={true}
             />
@@ -119,6 +135,7 @@ class Login extends Component {
               placeholder={'请输入密码'}
               secureTextEntry={true}
               numberOfLines={1}
+              onChangeText={this.changePassword}
               onSubmitEditing={this.onPasswordChange}
               KeyboardType={'numbers-and-punctuation'}
               password={true}

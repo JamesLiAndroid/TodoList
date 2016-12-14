@@ -7,6 +7,7 @@ const types = {
 
 export const actionCreators = {
   addItem: (item) => {
+    console.log('写入备忘录！')
     return {type: types.ADD_ITEM, payload: item}
   },
 

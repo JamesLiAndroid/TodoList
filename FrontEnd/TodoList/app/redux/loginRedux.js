@@ -3,11 +3,6 @@ const types = {
 	ADD_PASSWORD: 'ADD_PASSWORD'
 }
 
-const initialState = {
-	username: '',
-	password: ''
-}
-
 export const actionCreators = {
 	addUserName: (username) => {
 		console.log('username:'+username)
@@ -15,25 +10,34 @@ export const actionCreators = {
 	},
 
 	addPassword: (password) => {
+    console.log('password:'+password)
 		return {type: types.ADD_PASSWORD, payload: password}
 	}
 }
 
+const initialState = {
+	username: '',
+	password: ''
+}
+
+
 export const reducer = (state = initialState, action) => {
 	const {username, password} = state
 	const {type, payload} = action
-
+  console.log('Action: type:::::'+type+'::::::'+'payload:::'+payload)
 	switch(type) {
 		case types.ADD_USERNAME: {
+      console.log('添加姓名！'+username)
 			return {
 				...state,
-				username: username
+				username: payload
 			}
 		}
 		case types.ADD_PASSWORD: {
+      console.log('添加密码！'+password)
 			return {
 				...state,
-				password: password
+				password: payload
 			}
 		}
 
