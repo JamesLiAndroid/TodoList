@@ -113,6 +113,11 @@ class Login extends Component {
       this.loginFunc(username, password, (responseJson) => {
         console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
         console.log('登陆返回的数据为：'+responseJson.userId)
+        if(responseJson.userId) {
+          const {dispatch} = this.props
+          dispatch(loginActionCreators.addUserId(responseJson.userId))
+          console.log('写入UserId成功!')
+        }
       })
     } else {
       console.log('用户名或密码未输入')

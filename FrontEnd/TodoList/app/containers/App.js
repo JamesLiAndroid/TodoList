@@ -27,6 +27,33 @@ class App extends Component {
     dispatch: PropTypes.func.isRequired,
   }
 
+  loginFunc = (userId, callback) => {
+      fetch('http://172.16.7.218:3000/login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'userId='+userId
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((responseJson) => {
+        callback(responseJson)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+  }
+
+
+  componentDidMount = () => {
+    // 请求列表数据
+    
+  }
+
   addItem = (item) => {
     const {dispatch} = this.props
     dispatch(todoActionCreators.addItem(item))
