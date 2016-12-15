@@ -14,7 +14,7 @@ export default class extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Register />
+        <App />
       </Provider>
     )
   }

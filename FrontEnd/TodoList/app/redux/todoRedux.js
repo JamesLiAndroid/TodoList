@@ -1,5 +1,6 @@
 const types = {
   ADD_ITEM: 'ADD_ITEM',
+  ADD_ITEMS: 'ADD_ITEMS',
   REMOVE_ITEM: 'REMOVE_ITEM',
   TOGGLE_ITEM_COMPLETED: 'TOGGLE_ITEM_COMPLETED',
   REMOVE_COMPLETED: 'REMOVE_COMPLETED'
@@ -10,6 +11,11 @@ export const actionCreators = {
     console.log('写入备忘录！')
     return {type: types.ADD_ITEM, payload: item}
   },
+
+  addItems: (items) => {
+    console.log('批量写入！')
+    return {type: types.ADD_ITEMS, payload: items}
+  }
 
   removeItem: (index) => {
     return {type: types.REMOVE_ITEM, payload: index}
@@ -39,6 +45,12 @@ export const reducer = (state = initialState, action) => {
         items: [{ label: payload, completed: false}, ...items]
       }
     }
+    /*case types.ADD_ITEMS: {
+      return {
+        ...state,
+        items: [...payload, ...items]
+      }
+    } */
     case types.REMOVE_ITEM: {
       return {
         ...state,
