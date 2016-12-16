@@ -41,10 +41,16 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    console.log('开始请求数据！')
     // 请求列表数据
+    //todoActionCreators.search_all_item(this.state.userId)
     this.dataFunc('584a25bffdce28247af5af5b', (responseJson) => {
       console.log('获取的列表数据：'+JSON.stringify(responseJson))
+      // 写入数据
+      const {dispatch} = this.props
+      dispatch(todoActionCreators.addItems(responseJson))
     })
+
   }
 
   dataFunc = (userId, callback) => {

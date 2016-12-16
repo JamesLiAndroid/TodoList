@@ -50,7 +50,7 @@ export default class List extends Component {
 
     return (
       <View key={i} style={itemStyle}>
-        <Text> {item.label} </Text>
+        <Text> {item.content} </Text>
         <View style={styles.rightSection}>
           <Checkbox
             isChecked={item.completed}
