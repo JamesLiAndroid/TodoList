@@ -79,10 +79,15 @@ export default class Content extends Component {
       </View>
       )
     } else {
-
+      let uriImg = null
+      if(!itemContent.isComplete) {
+        uriImg = 'http://p0.ifengimg.com/ifeng/index/20150921/ifengLogo.png'
+      } else {
+        uriImg = 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png'
+      }
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={{uri: 'https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png'}} />
+        <Image style={styles.image} source={{ uri: uriImg }} />
         <View >
           <Text style={styles.content}>{itemContent.content}</Text>
           <View style={styles.seperator}/>
