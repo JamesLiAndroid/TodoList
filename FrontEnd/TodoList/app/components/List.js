@@ -46,14 +46,14 @@ export default class List extends Component {
 
   renderItem = (item, i) => {
     const {onToggleItemCompleted, onRemoveItem} = this.props
-    const itemStyle = item.completed ? [styles.item, styles.completed] : styles.item
+    const itemStyle = item.isComplete ? [styles.item, styles.completed] : styles.item
 
     return (
       <View key={i} style={itemStyle}>
         <Text> {item.content} </Text>
         <View style={styles.rightSection}>
           <Checkbox
-            isChecked={item.completed}
+            isChecked={item.isComplete}
             onToggle={() => onToggleItemCompleted(i)}
           />
           <TouchableOpacity onPress={() => onRemoveItem(i)}>

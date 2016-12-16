@@ -82,10 +82,19 @@ class App extends Component {
 //      dispatch(todoActionCreators.addItem(item))
       this.addItemToServer(item, this.state.userId, (responseJson) => {
         console.log('数据添加状态：'+responseJson.status+'::'+responseJson.result)
-        // 数据刷新
+
+        if(responseJson.status === 200) {
+          // 数据添加成功
+          const {dispatch} = this.props
+          dispatch(todoActionCreators.addItem(responseJson.data.reverse()))
+        } else {
+          console.log('数据添加不成功！')
+        }
+       /*       // 数据刷新
         this.dataFunc(this.state.userId, (responseJson) => {
-          console.log('数据刷新：'+responseJson[0].content)
+          console.log('数据刷新：'+JSON.stringify(responseJson))
         })
+        */
       })
     } else {
       console.log('插入数据为空！')
@@ -123,8 +132,19 @@ class App extends Component {
   }
 
   toggleItemCompleted = (index) => {
-    const {dispatch} = this.props
-    dispatch(todoActionCreators.toggleItemCompleted(index))
+    const {items, dispatch} = this.props
+    let itemId = items[index]._id
+    let isComplete = items[index].isComplete
+    let data = 'userId='+this.state.userId+'&itemId='+itemId+'&isCompleted='+!isComplete
+    new Client().postData('/changeStatus', data, (responseJson) => {
+      if(responseJson.status === 200) {
+        console.log('更改状态：：'+JSON.stringify(responseJson))
+        dispatch(todoActionCreators.toggleItemCompleted(index))
+        console.log('完成状态更改！')
+      } else {
+        console.log('更改状态失败！')
+      }
+    })
   }
 
   render() {

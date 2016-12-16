@@ -66,7 +66,7 @@ export const reducer = (state = initialState, action) => {
     case types.ADD_ITEM: {
       return {
         ...state,
-        items: [{ label: payload, completed: false}, ...items]
+        items: [payload, ...items]
       }
     }
     case types.ADD_ITEMS: {
@@ -88,7 +88,7 @@ export const reducer = (state = initialState, action) => {
         ...state,
         items: items.map((item, i) => {
           if(i === payload) {
-            return { label: item.label, completed: !item.completed}
+            return { content: item.content, isComplete: !item.isComplete}
           }
 
           return item
