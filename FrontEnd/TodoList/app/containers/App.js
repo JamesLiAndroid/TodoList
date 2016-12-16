@@ -44,7 +44,7 @@ class App extends Component {
     console.log('开始请求数据！')
     // 请求列表数据
     //todoActionCreators.search_all_item(this.state.userId)
-    this.dataFunc('584a25bffdce28247af5af5b', (responseJson) => {
+    this.dataFunc(this.state.userId, (responseJson) => {
       console.log('获取的列表数据：'+JSON.stringify(responseJson))
       // 写入数据
       const {dispatch} = this.props
@@ -102,13 +102,18 @@ class App extends Component {
   }
 
   addItemToServer = (item, userId, callback) => {
-    fetch('http://172.16.7.218:3000/addItem', {
+    let data = 'userId='+userId+'&content='+item
+
+    new Client().postData('/addItem', data, (responseJson) => {
+      callback(responseJson)
+    })
+   /* fetch('http://172.16.7.218:3000/addItem', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: 'userId='+userId+'&content='+item
+      body: 'userId='+userId+'&content='+item
       })
       .then((response) => {
         return response.json()
@@ -119,6 +124,7 @@ class App extends Component {
       .catch((error) => {
         console.error(error)
       })
+      */
   }
 
   removeItem = (index) => {
