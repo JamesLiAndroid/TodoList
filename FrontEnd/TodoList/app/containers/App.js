@@ -10,6 +10,8 @@ import Footer from '../components/Footer'
 import List from '../components/List'
 import Input from '../components/Input'
 
+import Client from '../network/Client'
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,19 +33,24 @@ class App extends Component {
     userId: ''
   }
 
-  componentDidMount = () => {
-    // 请求列表数据
+  componentWillMount = () => {
     // TODO:需要从前一个页面传入userId
     this.setState({
       userId: '584a25bffdce28247af5af5b'
     })
+  }
+
+  componentDidMount = () => {
+    // 请求列表数据
     this.dataFunc('584a25bffdce28247af5af5b', (responseJson) => {
-      console.log('获取的列表数据：'+responseJson[0].content)
+      console.log('获取的列表数据：'+JSON.stringify(responseJson))
     })
   }
 
   dataFunc = (userId, callback) => {
-      fetch('http://172.16.7.218:3000/searchAll', {
+    let data = 'userId='+this.state.userId
+    new Client().postData('/searchAll', data, callback)
+ /*     fetch('http://172.16.7.218:3000/searchAll', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -60,17 +67,17 @@ class App extends Component {
       .catch((error) => {
         console.error(error)
       })
-
+*/
   }
 
   addItem = (item) => {
     if(item) {
 //      const {dispatch} = this.props
 //      dispatch(todoActionCreators.addItem(item))
-      addItemToServer(item, this.state.userId, (responseJson) => {
+      this.addItemToServer(item, this.state.userId, (responseJson) => {
         console.log('数据添加状态：'+responseJson.status+'::'+responseJson.result)
         // 数据刷新
-        dataFunc(this.state.userId, (responseJson) => {
+        this.dataFunc(this.state.userId, (responseJson) => {
           console.log('数据刷新：'+responseJson[0].content)
         })
       })
@@ -97,14 +104,13 @@ class App extends Component {
       .catch((error) => {
         console.error(error)
       })
-
-
   }
 
   removeItem = (index) => {
     const {dispatch} = this.props
     dispatch(todoActionCreators.removeItem(index))
   }
+
   removeCompleted = () => {
     const {dispatch} = this.props
     dispatch(todoActionCreators.removeCompleted())
