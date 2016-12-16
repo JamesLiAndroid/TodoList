@@ -30,7 +30,7 @@ module.exports = function(app) {
           res.json({ 'status': 404, 'reason': '插入数据失败！'})
         } else {
           if(doc) {
-            res.json({'status': 200, 'result': '插入数据成功！'})
+            res.json({'status': 200, 'result': '插入数据成功！', 'data': doc})
           } else {
             res.json({ 'status': 404, 'result': '插入数据失败！' })
           }
