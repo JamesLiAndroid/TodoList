@@ -122,9 +122,23 @@ class App extends Component {
   }
 
   removeItem = (index) => {
-    const {dispatch} = this.props
-    dispatch(todoActionCreators.removeItem(index))
-  }
+    //    const {dispatch} = this.props
+    const {items, dispatch} = this.props
+    let itemId = items[index]._id
+    let data = 'userId='+this.state.userId+'&itemId='+itemId+'&isDel=true'
+    new Client().postData('/delItemFalse', data, (responseJson) => {
+      if(responseJson.status === 200) {
+        console.log('更改删除的状态：：'+JSON.stringify(responseJson))
+        dispatch(todoActionCreators.removeItem(index))
+    //    dispatch(todoActionCreators.removeCompleted())
+//        dispatch(todoActionCreators.toggleItemCompleted(index))
+        console.log('完成删除状态的更改！')
+      } else {
+        console.log('更改状态失败！')
+      }
+    })
+
+   }
 
   removeCompleted = () => {
     const {dispatch} = this.props
