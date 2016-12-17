@@ -25,6 +25,7 @@ const mapStateToProps = (state) => ({
 class App extends Component {
 
   static propTypes = {
+//    userId: PropTypes.string
     items: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
   }
@@ -35,8 +36,9 @@ class App extends Component {
 
   componentWillMount = () => {
     // TODO:需要从前一个页面传入userId
+    console.log('前一个页面传入的userId：'+this.props.userId)
     this.setState({
-      userId: '584a25bffdce28247af5af5b'
+      userId: this.props.userId
     })
   }
 
@@ -48,7 +50,7 @@ class App extends Component {
       console.log('获取的列表数据：'+JSON.stringify(responseJson))
       // 写入数据
       const {dispatch} = this.props
-      dispatch(todoActionCreators.addItems(responseJson))
+      dispatch(todoActionCreators.addItems(responseJson.reverse()))
     })
 
   }
@@ -86,7 +88,7 @@ class App extends Component {
         if(responseJson.status === 200) {
           // 数据添加成功
           const {dispatch} = this.props
-          dispatch(todoActionCreators.addItem(responseJson.data.reverse()))
+          dispatch(todoActionCreators.addItem(responseJson.data))
         } else {
           console.log('数据添加不成功！')
         }

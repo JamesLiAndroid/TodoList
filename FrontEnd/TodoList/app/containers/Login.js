@@ -119,6 +119,8 @@ class Login extends Component {
           const {dispatch} = this.props
           dispatch(loginActionCreators.addUserId(responseJson.userId))
           console.log('写入UserId成功!')
+          Actions.main({userId: responseJson.userId})
+
         }
       })
     } else {
@@ -128,7 +130,7 @@ class Login extends Component {
 
   loginFunc = (username, password, callback) => {
     let data = 'username='+username+'&password='+password
-    new Clinet().postData('/login', data, (responseJson) => {
+    new Client().postData('/login', data, (responseJson) => {
       callback(responseJson)
     })
 /*      fetch('http://172.16.7.218:3000/login', {
