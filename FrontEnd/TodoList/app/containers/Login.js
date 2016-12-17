@@ -20,7 +20,8 @@ import Title from '../components/Title'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+ //   justifyContent: 'center'
   },
 
   loginArea: {
@@ -34,12 +35,12 @@ const styles = StyleSheet.create({
   itemName: {
     fontSize: 15,
     color: '#CD5C5C',
-    flex: 1
+//    flex: 1
   },
 
   itemInput: {
-    flex: 5,
-    height: 50
+    // flex: 5,
+    height: 50,
   },
 
   btn: {

@@ -15,6 +15,8 @@ import Client from '../network/Client'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
 })
 
@@ -159,7 +161,9 @@ class App extends Component {
     let itemId = items[index]._id
     let isComplete = items[index].isComplete
     let data = 'userId='+this.state.userId+'&itemId='+itemId+'&isCompleted='+!isComplete
+    console.log('提交的状态数据为：' + data)
     new Client().postData('/changeStatus', data, (responseJson) => {
+      console.log('提交状态后的返回值：'+JSON.stringify(responseJson))
       if(responseJson.status === 200) {
         console.log('更改状态：：'+JSON.stringify(responseJson))
         dispatch(todoActionCreators.toggleItemCompleted(index))

@@ -1,7 +1,8 @@
 export default class Client {
   constructor() {
     // this.baseUrl = 'http://172.16.7.218:3000'
-    this.baseUrl = 'http://192.168.0.111:3000'
+    //     this.baseUrl = 'http://192.168.0.111:3000'
+    this.baseUrl = 'http://192.168.0.102:3000'
   }
 
   postData = (item, data, callback) => {

@@ -88,7 +88,8 @@ export const reducer = (state = initialState, action) => {
         ...state,
         items: items.map((item, i) => {
           if(i === payload) {
-            return { content: item.content, isComplete: !item.isComplete}
+            item.isComplete = !item.isComplete
+            return item
           }
 
           return item
