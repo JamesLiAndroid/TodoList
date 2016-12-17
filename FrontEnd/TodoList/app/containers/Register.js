@@ -13,6 +13,8 @@ import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 
 import { loginActionCreators } from '../redux/'
+
+import Client from '../network/Client'
 import Title from '../components/Title'
 
 const styles = StyleSheet.create({
@@ -121,7 +123,7 @@ class Register extends Component {
     if(currentUsername && currentPassword && currentRePassword) {
       if(currentPassword !== currentRePassword) {
         console.log('密码不匹配！')
-        return 
+        return
       }
       this.registerFunc(currentUsername, currentPassword, currentRePassword, (responseJson) => {
         //console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
@@ -140,7 +142,11 @@ class Register extends Component {
   }
 
   registerFunc = (username, password, repassword, callback) => {
-      fetch('http://172.16.7.218:3000/register', {
+    let data = 'username='+username+'&password='+password+'&repassword='+repassword
+    new Client().postData('register', data, (responseJson) => {
+      callback(responseJson)
+    })
+/*      fetch('http://172.16.7.218:3000/register', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -157,7 +163,7 @@ class Register extends Component {
       .catch((error) => {
         console.error(error)
       })
-
+*/
   }
 
   render() {

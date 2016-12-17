@@ -13,6 +13,8 @@ import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
 
 import { loginActionCreators } from '../redux/'
+
+import Client from '../network/Client'
 import Title from '../components/Title'
 
 const styles = StyleSheet.create({
@@ -125,7 +127,11 @@ class Login extends Component {
   }
 
   loginFunc = (username, password, callback) => {
-      fetch('http://172.16.7.218:3000/login', {
+    let data = 'username='+username+'&password='+password
+    new Clinet().postData('/login', data, (responseJson) => {
+      callback(responseJson)
+    })
+/*      fetch('http://172.16.7.218:3000/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -142,7 +148,7 @@ class Login extends Component {
       .catch((error) => {
         console.error(error)
       })
-
+*/
   }
 
   render() {
