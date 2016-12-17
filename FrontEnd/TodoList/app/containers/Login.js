@@ -108,12 +108,13 @@ class Login extends Component {
   }
 
   login = () => {
-    const {username, password} = this.props
-    console.log(username+'::'+password)
+    const {currentUsername, currentPassword} = this.state
+    // const {username, password} = this.props
+    console.log(currentUsername+'::'+currentPassword)
 
-    if(username && password) {
-      console.log(username+'::'+password)
-      this.loginFunc(username, password, (responseJson) => {
+    if(currentUsername && currentPassword) {
+      // console.log(username+'::'+password)
+      this.loginFunc(currentUsername, currentPassword, (responseJson) => {
         console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
         console.log('登陆返回的数据为：'+responseJson.userId)
         if(responseJson.userId) {
