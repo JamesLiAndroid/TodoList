@@ -74,7 +74,7 @@ class Login extends Component {
   }
 
   toRegister() {
-
+    Actions.register()
   }
 
   changeName = (text) => {

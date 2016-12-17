@@ -74,10 +74,6 @@ class Register extends Component {
     currentRePassword: ''
   }
 
-  back() {
-
-  }
-
   changeName = (text) => {
     console.log('写入用户名：'+text)
     this.setState({currentUsername: text})
@@ -101,6 +97,7 @@ class Register extends Component {
     dispatch(loginActionCreators.addUserName(currentUsername))
     console.log('写入用户名完成！')
     //this.setState({username: content})
+
   }
 
   onPasswordChange = () => {
@@ -135,6 +132,17 @@ class Register extends Component {
         // 写入信息
         this.onNameChange()
         this.onPasswordChange()
+        // 直接登录
+        this.loginFunc(currentUsername, currentPassword, (responseJson) => {
+          console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
+          console.log('登陆返回的数据为：'+responseJson.userId)
+          if(responseJson.userId) {
+            //const {dispatch} = this.props
+            //dispatch(loginActionCreators.addUserId(responseJson.userId))
+            console.log('登录并获取UserId成功!')
+            Actions.main({userId: responseJson.userId})
+          }
+        })
       })
     } else {
       console.log('注册的用户名或密码未输入')
@@ -143,28 +151,40 @@ class Register extends Component {
 
   registerFunc = (username, password, repassword, callback) => {
     let data = 'username='+username+'&password='+password+'&repassword='+repassword
-    new Client().postData('register', data, (responseJson) => {
+    new Client().postData('/register', data, (responseJson) => {
       callback(responseJson)
     })
-/*      fetch('http://172.16.7.218:3000/register', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'username='+username+'&password='+password+'&repassword='+repassword
-      })
-      .then((response) => {
-        return response.json()
-      })
-      .then((responseJson) => {
-        callback(responseJson)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-*/
   }
+/*
+  login = () => {
+    const {username, password} = this.props
+    console.log(username+'::'+password)
+
+    if(username && password) {
+      console.log(username+'::'+password)
+      this.loginFunc(username, password, (responseJson) => {
+        console.log('status:'+responseJson.status+'::::'+'result:'+responseJson.result)
+        console.log('登陆返回的数据为：'+responseJson.userId)
+        if(responseJson.userId) {
+          const {dispatch} = this.props
+          dispatch(loginActionCreators.addUserId(responseJson.userId))
+          console.log('写入UserId成功!')
+          Actions.main({userId: responseJson.userId})
+
+        }
+      })
+    } else {
+      console.log('用户名或密码未输入')
+    }
+  }
+*/
+  loginFunc = (username, password, callback) => {
+    let data = 'username='+username+'&password='+password
+    new Client().postData('/login', data, (responseJson) => {
+      callback(responseJson)
+    })
+  }
+
 
   render() {
     //const {username, password} = this.props
@@ -211,11 +231,7 @@ class Register extends Component {
             />
           </View>
           <TouchableOpacity style={styles.btn} onPress={this.register}>
-            <Text style={styles.btnText}>注册</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.btn} onPress={this.back}>
-            <Text style={styles.btnText}>返回</Text>
+            <Text style={styles.btnText}>注册并登录</Text>
           </TouchableOpacity>
         </View>
       </View>
