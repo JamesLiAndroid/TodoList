@@ -88,6 +88,13 @@ module.exports = function(app) {
     var isCompleted = req.body.isCompleted
     var itemId = req.body.itemId
 
+    console.log('当前userId状态：'+userId+"\nitemId："+itemId)
+
+    if(!userId.match(/^[0-9a-fA-F]{24}$/)) {
+      res.json({'status': 404, 'reason':'用户id输入不正确！'})
+      return
+    }
+
     dbUser.findOne({
       _id: userId
     }, function(error, doc) {
@@ -104,8 +111,9 @@ module.exports = function(app) {
               isComplete: isCompleted
             }
           }, function(error) {
+            console.log('状态更新：'+error)
             if(error) {
-              res.json({ 'status': 404, 'reason': '状态更新不成功' })
+              res.json({ 'status': 404, 'reason': '状态更新不成功', 'error': error})
             } else {
               res.json({ 'status': 200, 'result': '状态更新完毕！'})
             }
@@ -171,6 +179,7 @@ module.exports = function(app) {
               isDel: isDeled
             }
           }, function(error) {
+            console.log('删除：'+error)
             if(error) {
               res.json({ 'status': 404, 'reason': '数据删除不成功' })
             } else {
