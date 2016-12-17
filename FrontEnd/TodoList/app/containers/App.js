@@ -154,6 +154,7 @@ class App extends Component {
   }
 
   toggleItemCompleted = (index) => {
+    console.log('ToggleItem:'+index)
     const {items, dispatch} = this.props
     let itemId = items[index]._id
     let isComplete = items[index].isComplete
@@ -169,6 +170,12 @@ class App extends Component {
     })
   }
 
+  onItemPress = (i) => {
+    console.log('item点击:'+i)
+    const {items} = this.props
+    Actions.item({userId: this.props.userId, itemId: items[i]._id})
+  }
+
   render() {
     const {items} = this.props
     return (
@@ -180,6 +187,7 @@ class App extends Component {
           items={items}
           onRemoveItem={this.removeItem}
           onToggleItemCompleted={this.toggleItemCompleted}
+          onItemPress={this.onItemPress}
         />
         <View style={styles.divider} />
         <Footer onRemoveCompleted={this.removeCompleted}/>

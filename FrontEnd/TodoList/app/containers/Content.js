@@ -53,9 +53,10 @@ export default class Content extends Component {
 
   componentWillMount() {
     // TODO:待传入userId,itemId
+    console.log(this.props.userId+':::'+this.props.itemId)
     this.setState({
-      userId: '584a25bffdce28247af5af5b',
-      itemId: '5851f90f3d1fe01bced1c5e4'
+      userId: this.props.userId,
+      itemId: this.props.itemId
     })
   }
 
