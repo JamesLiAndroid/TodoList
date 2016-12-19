@@ -19,6 +19,7 @@ TODO：
 * 详情页面图片的调整
 * 双击退出的实现
 * 编写Web端的内容，使用React来编写！
+* 后端编写转ES6标准
 
 by JamesLiAndroid，
 
